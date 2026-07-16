@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farhan — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,500;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0d12;
+    --bg-alt:#12151c;
+    --surface:#161922;
+    --border:rgba(255,255,255,0.08);
+    --text:#e9e6df;
+    --muted:#8a8d97;
+    --accent:#c9a876;
+    --accent-soft:rgba(201,168,118,0.14);
+    --accent2:#7593ac;
+    --maxw:720px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{background:var(--accent-soft);color:var(--accent);}
+
+  a{color:inherit;}
+
+  .container{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;
+    top:0;
+    z-index:10;
+    background:rgba(11,13,18,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  nav .container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    height:64px;
+  }
+  .nav-name{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+    color:var(--text);
+  }
+  .nav-links{
+    display:flex;
+    gap:28px;
+    list-style:none;
+  }
+  .nav-links a{
+    font-size:13px;
+    text-decoration:none;
+    color:var(--muted);
+    transition:color 0.2s ease;
+  }
+  .nav-links a:hover,
+  .nav-links a:focus-visible{color:var(--text);}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    padding:110px 0 70px;
+    border-bottom:1px solid var(--border);
+  }
+  h1.title{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(40px,7vw,64px);
+    line-height:1.08;
+    margin-top:18px;
+    letter-spacing:-0.01em;
+  }
+  h1.title em{
+    font-style:italic;
+    font-weight:300;
+    color:var(--accent);
+  }
+  .hero-sub{
+    margin-top:22px;
+    font-size:17px;
+    color:var(--muted);
+    max-width:52ch;
+  }
+
+  /* terminal signature block */
+  .terminal{
+    margin-top:42px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:20px 22px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+    color:#c7d0d8;
+    max-width:56ch;
+  }
+  .terminal-bar{
+    display:flex;
+    gap:6px;
+    margin-bottom:14px;
+  }
+  .terminal-bar span{
+    width:9px;height:9px;border-radius:50%;
+    background:rgba(255,255,255,0.14);
+  }
+  .term-line{color:var(--muted);}
+  .term-line .prompt{color:var(--accent2);}
+  #typed-text{color:var(--text);}
+  .cursor{
+    display:inline-block;
+    width:7px;height:15px;
+    background:var(--accent);
+    margin-left:2px;
+    vertical-align:text-bottom;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---------- SECTIONS ---------- */
+  section{
+    padding:64px 0;
+    border-bottom:1px solid var(--border);
+  }
+  section:last-of-type{border-bottom:none;}
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:28px;
+  }
+  .section-title{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:26px;
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* about */
+  .about-text{
+    font-size:16.5px;
+    color:#cfccc4;
+    max-width:60ch;
+  }
+  .about-text + .about-text{margin-top:14px;}
+  .inline-accent{color:var(--accent);}
+
+  /* skills */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+  .skill-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:22px;
+    transition:border-color 0.25s ease, transform 0.25s ease;
+  }
+  .skill-card:hover{
+    border-color:rgba(201,168,118,0.35);
+    transform:translateY(-2px);
+  }
+  .skill-card h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:18px;
+    margin-bottom:8px;
+  }
+  .skill-card p{
+    font-size:14.5px;
+    color:var(--muted);
+  }
+  .skill-card.wide{grid-column:1 / -1;}
+
+  /* curiosity / hobbies */
+  .curiosity-list{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .curiosity-list li{
+    display:flex;
+    gap:16px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--border);
+    font-size:15.5px;
+    color:#d3d0c9;
+  }
+  .curiosity-list li:last-child{border-bottom:none;padding-bottom:0;}
+  .curiosity-list .mark{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--accent2);
+    flex-shrink:0;
+  }
+
+  /* now / status */
+  .status-line{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:#8fc97a;
+    box-shadow:0 0 0 3px rgba(143,201,122,0.15);
+  }
+
+  /* contact */
+  .contact-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:20px;
+  }
+  .contact-links a{
+    text-decoration:none;
+    font-size:14px;
+    padding:10px 18px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    transition:border-color 0.2s ease, color 0.2s ease;
+    color:var(--text);
+  }
+  .contact-links a:hover,
+  .contact-links a:focus-visible{
+    border-color:var(--accent);
+    color:var(--accent);
+  }
+
+  footer{
+    padding:32px 0 60px;
+    text-align:center;
+    font-size:13px;
+    color:var(--muted);
+  }
+
+  @media (max-width:600px){
+    .skills-grid{grid-template-columns:1fr;}
+    header.hero{padding:80px 0 50px;}
+    .nav-links{gap:16px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <span class="nav-name">farhan</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#curiosity">Curiosity</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <p class="eyebrow">Portfolio — 2026</p>
+    <h1 class="title">Farhan.<br>Still <em>figuring it out</em>.</h1>
+    <p class="hero-sub">
+      Just finished class 12 and now studying Computer Science &amp; Mathematics.
+      Early in the journey, and genuinely enjoying not having all the answers yet.
+    </p>
+
+    <div class="terminal">
+      <div class="terminal-bar"><span></span><span></span><span></span></div>
+      <div class="term-line"><span class="prompt">farhan@world</span>:~$ whoami</div>
+      <div class="term-line">&gt; <span id="typed-text"></span><span class="cursor"></span></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="container reveal">
+    <div class="section-head">
+      <span class="eyebrow">01</span>
+      <h2 class="section-title">About</h2>
+    </div>
+    <p class="about-text">
+      I recently finished class 12 and I'm now pursuing Computer Science and Mathematics.
+      I don't have a long list of finished projects yet — what I have instead is a habit of
+      <span class="inline-accent">sitting with hard problems</span> until they start to make sense,
+      and a kind of restlessness that pulls me toward anything I don't fully understand.
+    </p>
+    <p class="about-text">
+      I care about getting things right, but I care more about understanding <em>why</em> they're right.
+      That's roughly where I am right now: early, curious, and comfortable saying "I don't know yet."
+    </p>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container reveal">
+    <div class="section-head">
+      <span class="eyebrow">02</span>
+      <h2 class="section-title">How I think</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Deep thinking</h3>
+        <p>I'd rather spend longer understanding a problem properly than arrive at a quick, shallow answer.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Problem solving</h3>
+        <p>Breaking a hard thing into smaller honest pieces, then working through each one patiently.</p>
+      </div>
+      <div class="skill-card wide">
+        <h3>Compassion, for everything</h3>
+        <p>Not just for people — for ideas, for systems, for mistakes. I try to understand things on their own terms before judging them, in code and outside it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="curiosity">
+  <div class="container reveal">
+    <div class="section-head">
+      <span class="eyebrow">03</span>
+      <h2 class="section-title">What pulls my curiosity</h2>
+    </div>
+    <ul class="curiosity-list">
+      <li><span class="mark">→</span> Learning new things, almost for its own sake.</li>
+      <li><span class="mark">→</span> Any task that looks complicated enough that most people avoid it.</li>
+      <li><span class="mark">→</span> Mathematics as a way of thinking, not just a subject to pass.</li>
+      <li><span class="mark">→</span> Figuring out how the things I use every day actually work underneath.</li>
+    </ul>
+
+    <div style="margin-top:32px;">
+      <p class="status-line"><span class="dot"></span> currently: exploring the basics of CS &amp; mathematics, one hard problem at a time</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container reveal">
+    <div class="section-head">
+      <span class="eyebrow">04</span>
+      <h2 class="section-title">Get in touch</h2>
+    </div>
+    <p class="about-text">
+      Still building this out — projects will show up here as I make them. Until then, feel free to reach out.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:farhan@example.com">Email</a>
+      <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built by Farhan · dark &amp; still figuring it out</p>
+</footer>
+
+<script>
+  // typing effect for the terminal signature block
+  const phrases = [
+    "a class 12 graduate, now studying CS & Mathematics",
+    "someone who's curious about almost everything",
+    "still figuring it out — and okay with that",
+    "trying to understand things, not just finish them"
+  ];
+
+  const el = document.getElementById('typed-text');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let phraseIndex = 0, charIndex = 0, deleting = false;
+
+  function typeLoop(){
+    const current = phrases[phraseIndex];
+
+    if(!deleting){
+      el.textContent = current.slice(0, charIndex + 1);
+      charIndex++;
+      if(charIndex === current.length){
+        deleting = true;
+        setTimeout(typeLoop, 1600);
+        return;
+      }
+    } else {
+      el.textContent = current.slice(0, charIndex - 1);
+      charIndex--;
+      if(charIndex === 0){
+        deleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+      }
+    }
+    setTimeout(typeLoop, deleting ? 30 : 55);
+  }
+
+  if(prefersReduced){
+    el.textContent = phrases[0];
+  } else {
+    typeLoop();
+  }
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
